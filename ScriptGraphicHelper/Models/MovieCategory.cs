@@ -5,8 +5,8 @@ namespace ScriptGraphicHelper.Models
 {
     public class MovieCategory : BindableBase
     {
-        private int _Hwnd;
-        public int Hwnd
+        private nint _Hwnd;
+        public nint Hwnd
         {
             get { return _Hwnd; }
             set { SetProperty(ref _Hwnd, value); }
@@ -30,7 +30,7 @@ namespace ScriptGraphicHelper.Models
             set { SetProperty(ref _Info, value); }
         }
         public ObservableCollection<MovieCategory> Movies { get; set; } = new ObservableCollection<MovieCategory>();
-        public MovieCategory(int hwnd, string title, string className, params MovieCategory[] movies)
+        public MovieCategory(nint hwnd, string title, string className, params MovieCategory[] movies)
         {
             Hwnd = hwnd;
             Title = title;

@@ -1,11 +1,10 @@
-﻿using ScriptGraphicHelper.Models;
-using ScriptGraphicHelper.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
@@ -16,6 +15,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ImTools;
+using ScriptGraphicHelper.Models;
+using ScriptGraphicHelper.ViewModels;
+using Vanara.PInvoke;
 using static System.Environment;
 
 namespace ScriptGraphicHelper.Views
@@ -58,26 +61,26 @@ namespace ScriptGraphicHelper.Views
             if (movie != null)
             {
                 BindHwnd.Text = movie.Hwnd.ToString();
+                BindTitle.Text = movie.Title.ToString();
+                BindClassName.Text = movie.ClassName.ToString();
+                ResultHwndTitle = movie.Title ?? movie.ClassName ?? movie.Hwnd.ToString();
             }
         }
         public int ResultHwnd { get; set; } = -1;
+        public string ResultHwndTitle { get; set; }
         public int ResultGraphicMode { get; set; } = -1;
         public int ResultAttribute { get; set; } = -1;
         public int ResultMode { get; set; } = -1;
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
-            if (BindHwnd.Text != "" && BindGraphicMode.SelectedIndex != -1 && BindAttribute.SelectedIndex != -1 && BindMode.SelectedIndex != -1)
+            if (BindHwnd.Text != "")
             {
                 ResultHwnd = int.Parse(BindHwnd.Text);
-                ResultGraphicMode = BindGraphicMode.SelectedIndex;
-                ResultAttribute = BindAttribute.SelectedIndex;
-                ResultMode = BindMode.SelectedIndex;
-
                 DialogResult = true;
             }
             else
             {
-                MessageBox.Show("请先选择绑定句柄和绑定模式!");
+                MessageBox.Show("请先选择绑定句柄!");
             }
         }
 
@@ -105,7 +108,6 @@ namespace ScriptGraphicHelper.Views
         }
 
 
-        private Dmsoft DM = new Dmsoft();
 
         private void Button_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -113,15 +115,15 @@ namespace ScriptGraphicHelper.Views
             NativeMethods.SetSystemCursor(cur, NativeMethods.OCR_NORMAL);
         }
 
-        private void EnumWindows(int parentHwd, MovieCategory movieCategory)
+        private void EnumWindows(nint parentHwd, MovieCategory movieCategory)
         {
-            string[] hwnds = DM.EnumWindow(parentHwd, "", "", 4).Split(',');
-            for (int i = 0; i < hwnds.Length; i++)
+            List<nint> hwnds = WindApi.EnumWindow(parentHwd);
+            for (int i = 0; i < hwnds.Count; i++)
             {
-                if (hwnds[i].Trim() != "")
+                var hwnd = hwnds[i];
+                if (hwnd != 0)
                 {
-                    int hwnd = int.Parse(hwnds[i].Trim());
-                    movieCategory.Movies.Add(new MovieCategory(hwnd, DM.GetWindowTitle(hwnd), DM.GetWindowClass(hwnd)));
+                    movieCategory.Movies.Add(new MovieCategory(hwnd, WindApi.GetWindowTitle(hwnd), WindApi.GetWindowClass(hwnd)));
                     EnumWindows(hwnd, movieCategory.Movies[i]);
                 }
             }
@@ -131,10 +133,17 @@ namespace ScriptGraphicHelper.Views
         {
             MovieCategories.Clear();
             NativeMethods.SystemParametersInfo(NativeMethods.SPI_SETCURSORS, 0, IntPtr.Zero, NativeMethods.SPIF_SENDWININICHANGE);
-            int hwnd = DM.GetMousePointWindow();
-            int parentHwnd = DM.GetWindow(hwnd, 7);
-            MovieCategories.Add(new MovieCategory(parentHwnd, DM.GetWindowTitle(parentHwnd), DM.GetWindowClass(parentHwnd)));
+            nint parentHwnd = WindApi.GetMousePointWindow();
+            MovieCategories.Add(new MovieCategory(parentHwnd, WindApi.GetWindowTitle(parentHwnd), WindApi.GetWindowClass(parentHwnd)));
             EnumWindows(parentHwnd, MovieCategories[0]);
+            var movie = MovieCategories.FirstOrDefault();
+            if (movie != null)
+            {
+                BindHwnd.Text = movie.Hwnd.ToString();
+                BindTitle.Text = movie.Title.ToString();
+                BindClassName.Text = movie.ClassName.ToString();
+                ResultHwndTitle = movie.Title ?? movie.ClassName ?? movie.Hwnd.ToString();
+            }
         }
     }
 }

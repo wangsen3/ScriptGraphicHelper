@@ -786,7 +786,6 @@ namespace ScriptGraphicHelper.ViewModels
             setting.LastAllOffset = ColorInfo.AllOffsetColor;
             setting.LastHintColorShow = ColorInfo.BrushMode;
             setting.LastIsAddRange = CreateColorStrHelper.IsAddRange;
-            setting.LastDMRegCode = Dmsoft.RegCode;
 
             Config config = new Config(setting);
             if ((bool)config.ShowDialog())
@@ -811,7 +810,6 @@ namespace ScriptGraphicHelper.ViewModels
                     AllOffsetChanged(result.LastAllOffset);
                 }
                 CreateColorStrHelper.IsAddRange = result.LastIsAddRange;
-                Dmsoft.RegCode = result.LastDMRegCode;
             }
         });
 

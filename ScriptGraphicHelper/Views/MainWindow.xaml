@@ -1,827 +1,811 @@
-﻿<Window
-    x:Class="ScriptGraphicHelper.Views.MainWindow"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-    xmlns:prism="http://prismlibrary.com/"
-    Name="_Window"
-    Title="综合图色助手 V1.1.8"
-    Width="1450"
-    Height="825"
-    prism:ViewModelLocator.AutoWireViewModel="True"
-    Background="{DynamicResource MaterialDesignPaper}"
-    Closed="Window_Closed"
-    Cursor="{Binding WindowCursor, Mode=TwoWay}"
-    FontFamily="{materialDesign:MaterialDesignFont}"
-    Loaded="Window_Loaded"
-    PreviewKeyDown="Window_PreviewKeyDown"
-    SizeChanged="Window_SizeChanged"
-    TextElement.FontSize="14"
-    TextElement.FontWeight="Normal"
-    TextElement.Foreground="{DynamicResource MaterialDesignBody}">
-    <Window.InputBindings>
-        <KeyBinding Key="F1" Command="{Binding ClearData_Click}" />
-        <KeyBinding
-            Key="F2"
-            Command="{Binding ConfigSet_Click}"
-            CommandParameter="{Binding ElementName=_Window}" />
-        <KeyBinding
-            Key="A"
-            Command="{Binding Key_AddColorInfo}"
-            CommandParameter="A" />
-        <KeyBinding
-            Key="S"
-            Command="{Binding Key_AddColorInfo}"
-            CommandParameter="S" />
-        <KeyBinding
-            Key="D"
-            Command="{Binding Key_AddColorInfo}"
-            CommandParameter="D" />
-    </Window.InputBindings>
+﻿<Window x:Class="ScriptGraphicHelper.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:prism="http://prismlibrary.com/"
+        Name="_Window"
+        Title="综合图色助手 V1.1.8"
+        Width="1450"
+        Height="825"
+        prism:ViewModelLocator.AutoWireViewModel="True"
+        Background="{DynamicResource MaterialDesignPaper}"
+        Closed="Window_Closed"
+        Cursor="{Binding WindowCursor, Mode=TwoWay}"
+        FontFamily="{materialDesign:MaterialDesignFont}"
+        Loaded="Window_Loaded"
+        PreviewKeyDown="Window_PreviewKeyDown"
+        SizeChanged="Window_SizeChanged"
+        TextElement.FontSize="14"
+        TextElement.FontWeight="Normal"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}">
+	<Window.InputBindings>
+		<KeyBinding Key="F1"
+		            Command="{Binding ClearData_Click}" />
+		<KeyBinding Key="F2"
+		            Command="{Binding ConfigSet_Click}"
+		            CommandParameter="{Binding ElementName=_Window}" />
+		<KeyBinding Key="A"
+		            Command="{Binding Key_AddColorInfo}"
+		            CommandParameter="A" />
+		<KeyBinding Key="S"
+		            Command="{Binding Key_AddColorInfo}"
+		            CommandParameter="S" />
+		<KeyBinding Key="D"
+		            Command="{Binding Key_AddColorInfo}"
+		            CommandParameter="D" />
+	</Window.InputBindings>
 
-    <Grid>
-        <materialDesign:Snackbar
-            x:Name="AboutHint"
-            Padding="40,0,0,0"
-            VerticalAlignment="Top"
-            IsActive="True"
-            Message="F1清空表格, F2更改配置" />
-        <Grid
-            x:Name="Panel_1"
-            Width="auto"
-            Height="auto"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top">
-            <ScrollViewer
-                x:Name="Scroll"
-                CanContentScroll="False"
-                Focusable="False"
-                HorizontalScrollBarVisibility="Hidden"
-                Style="{DynamicResource MaterialDesignScrollViewer}"
-                VerticalScrollBarVisibility="Hidden">
-                <StackPanel
-                    Width="Auto"
-                    Height="Auto"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top">
-                    <StackPanel
-                        Width="120"
-                        Margin="20,15,20,10"
-                        Orientation="Horizontal"
-                        ToolTip="{Binding EmulatorOptionsToolTip, Mode=TwoWay}">
-                        <Viewbox
-                            Width="24"
-                            Height="24"
-                            Margin="0,3,0,0"
-                            Stretch="Uniform">
-                            <Canvas Width="48" Height="48">
-                                <Path
-                                    Stroke="#FF666666"
-                                    StrokeEndLineCap="Round"
-                                    StrokeLineJoin="Round"
-                                    StrokeStartLineCap="Round"
-                                    StrokeThickness="4">
-                                    <Path.Data>
-                                        <PathGeometry Figures="M5 8C5 6.89543 5.89543 6 7 6H41C42.1046 6 43 6.89543 43 8V32C43 33.1046 42.1046 34 41 34H7C5.89543 34 5 33.1046 5 32V8Z" FillRule="NonZero" />
-                                    </Path.Data>
-                                </Path>
-                                <Path
-                                    Fill="#FF666666"
-                                    Stroke="#FF666666"
-                                    StrokeEndLineCap="Round"
-                                    StrokeLineJoin="Round"
-                                    StrokeStartLineCap="Round"
-                                    StrokeThickness="1">
-                                    <Path.Data>
-                                        <PathGeometry Figures="m 5 28.198368 c 0 -0.80106 0.89543 -1.450407 2 -1.450407 h 34 c 1.1046 0 2 0.649347 2 1.450407 v 4.351224 C 43 33.350652 42.1046 34 41 34 H 7 C 5.89543 34 5 33.350652 5 32.549592 Z" FillRule="NonZero" />
-                                    </Path.Data>
-                                </Path>
-                                <Path
-                                    Stroke="#FF666666"
-                                    StrokeEndLineCap="Round"
-                                    StrokeLineJoin="Round"
-                                    StrokeStartLineCap="Round"
-                                    StrokeThickness="4">
-                                    <Path.Data>
-                                        <PathGeometry Figures="M22 12L18 17" FillRule="NonZero" />
-                                    </Path.Data>
-                                </Path>
-                                <Path
-                                    Stroke="#FF666666"
-                                    StrokeEndLineCap="Round"
-                                    StrokeLineJoin="Round"
-                                    StrokeStartLineCap="Round"
-                                    StrokeThickness="4">
-                                    <Path.Data>
-                                        <PathGeometry Figures="M28 14L25 18" FillRule="NonZero" />
-                                    </Path.Data>
-                                </Path>
-                                <Ellipse
-                                    Canvas.Left="22"
-                                    Canvas.Top="29"
-                                    Width="4"
-                                    Height="4"
-                                    Fill="#FF303030" />
-                                <Path
-                                    Stroke="#FF666666"
-                                    StrokeEndLineCap="Round"
-                                    StrokeLineJoin="Round"
-                                    StrokeStartLineCap="Round"
-                                    StrokeThickness="4">
-                                    <Path.Data>
-                                        <PathGeometry Figures="M17 34L14 42H34L31 34" FillRule="NonZero" />
-                                    </Path.Data>
-                                </Path>
-                            </Canvas>
-                        </Viewbox>
-                        <ComboBox
-                            x:Name="EmulatorOptions"
-                            Width="85"
-                            Margin="10,0,0,0"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Bottom"
-                            ItemsSource="{Binding EmulatorInfo, Mode=TwoWay}">
-                            <ComboBox.ContextMenu>
-                                <ContextMenu Style="{DynamicResource MaterialDesignContextMenu}">
-                                    <MenuItem Command="{Binding ClearEmulatorOptions_Click}" Header="重置选择" FontSize="10" />
-                                </ContextMenu>
-                            </ComboBox.ContextMenu>
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="SelectionChanged">
-                                    <i:InvokeCommandAction Command="{Binding Emulator_SelectionChanged}" CommandParameter="{Binding ElementName=_Window}" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </ComboBox>
-                    </StackPanel>
-                    <Button
-                        x:Name="ScreenShot"
-                        Width="120"
-                        Margin="20,7"
-                        Command="{Binding ScreenShot_Click}"
-                        Cursor="Hand"
-                        Style="{DynamicResource MaterialDesignRaisedButton}">
-                        截图
-                    </Button>
-                    <Button
-                        x:Name="Open"
-                        Width="120"
-                        Margin="20,7"
-                        Command="{Binding Open_Click}"
-                        Style="{DynamicResource MaterialDesignRaisedButton}">
-                        载入
-                    </Button>
-                    <Button
-                        x:Name="Save"
-                        Width="120"
-                        Margin="20,7"
-                        Command="{Binding Save_Click}"
-                        Style="{DynamicResource MaterialDesignRaisedButton}">
-                        保存
-                    </Button>
-                    <Button
-                        x:Name="TurnRight"
-                        Width="120"
-                        Margin="20,7"
-                        Command="{Binding TurnRight_Click}"
-                        Style="{DynamicResource MaterialDesignRaisedButton}">
-                        右转
-                    </Button>
-                    <Button
-                        x:Name="Test"
-                        Width="120"
-                        Margin="20,7"
-                        Command="{Binding Test_Click}"
-                        CommandParameter="{Binding ElementName=_Window}"
-                        Style="{DynamicResource MaterialDesignRaisedButton}">
-                        测试
-                    </Button>
+	<Grid>
+		<materialDesign:Snackbar x:Name="AboutHint"
+		                         Padding="40,0,0,0"
+		                         VerticalAlignment="Top"
+		                         IsActive="True"
+		                         Message="F1清空表格, F2更改配置" />
+		<Grid x:Name="Panel_1"
+		      Width="auto"
+		      Height="auto"
+		      HorizontalAlignment="Left"
+		      VerticalAlignment="Top">
+			<ScrollViewer x:Name="Scroll"
+			              CanContentScroll="False"
+			              Focusable="False"
+			              HorizontalScrollBarVisibility="Hidden"
+			              Style="{DynamicResource MaterialDesignScrollViewer}"
+			              VerticalScrollBarVisibility="Hidden">
+				<StackPanel Width="Auto"
+				            Height="Auto"
+				            HorizontalAlignment="Left"
+				            VerticalAlignment="Top">
+					<StackPanel Width="120"
+					            Margin="20,2,20,2"
+					            Orientation="Horizontal"
+					            ToolTip="{Binding EmulatorOptionsToolTip, Mode=TwoWay}">
+						<Viewbox Width="24"
+						         Height="24"
+						         Margin="0,3,0,0"
+						         Stretch="Uniform">
+							<Canvas Width="48"
+							        Height="48">
+								<Path Stroke="#FF666666"
+								      StrokeEndLineCap="Round"
+								      StrokeLineJoin="Round"
+								      StrokeStartLineCap="Round"
+								      StrokeThickness="4">
+									<Path.Data>
+										<PathGeometry Figures="M5 8C5 6.89543 5.89543 6 7 6H41C42.1046 6 43 6.89543 43 8V32C43 33.1046 42.1046 34 41 34H7C5.89543 34 5 33.1046 5 32V8Z"
+										              FillRule="NonZero" />
+									</Path.Data>
+								</Path>
+								<Path Fill="#FF666666"
+								      Stroke="#FF666666"
+								      StrokeEndLineCap="Round"
+								      StrokeLineJoin="Round"
+								      StrokeStartLineCap="Round"
+								      StrokeThickness="1">
+									<Path.Data>
+										<PathGeometry Figures="m 5 28.198368 c 0 -0.80106 0.89543 -1.450407 2 -1.450407 h 34 c 1.1046 0 2 0.649347 2 1.450407 v 4.351224 C 43 33.350652 42.1046 34 41 34 H 7 C 5.89543 34 5 33.350652 5 32.549592 Z"
+										              FillRule="NonZero" />
+									</Path.Data>
+								</Path>
+								<Path Stroke="#FF666666"
+								      StrokeEndLineCap="Round"
+								      StrokeLineJoin="Round"
+								      StrokeStartLineCap="Round"
+								      StrokeThickness="4">
+									<Path.Data>
+										<PathGeometry Figures="M22 12L18 17"
+										              FillRule="NonZero" />
+									</Path.Data>
+								</Path>
+								<Path Stroke="#FF666666"
+								      StrokeEndLineCap="Round"
+								      StrokeLineJoin="Round"
+								      StrokeStartLineCap="Round"
+								      StrokeThickness="4">
+									<Path.Data>
+										<PathGeometry Figures="M28 14L25 18"
+										              FillRule="NonZero" />
+									</Path.Data>
+								</Path>
+								<Ellipse Canvas.Left="22"
+								         Canvas.Top="29"
+								         Width="4"
+								         Height="4"
+								         Fill="#FF303030" />
+								<Path Stroke="#FF666666"
+								      StrokeEndLineCap="Round"
+								      StrokeLineJoin="Round"
+								      StrokeStartLineCap="Round"
+								      StrokeThickness="4">
+									<Path.Data>
+										<PathGeometry Figures="M17 34L14 42H34L31 34"
+										              FillRule="NonZero" />
+									</Path.Data>
+								</Path>
+							</Canvas>
+						</Viewbox>
+						<ComboBox x:Name="EmulatorOptions"
+						          Width="85"
+						          Margin="10,0,0,0"
+						          HorizontalAlignment="Right"
+						          VerticalAlignment="Bottom"
+						          ItemsSource="{Binding EmulatorInfo, Mode=TwoWay}">
+							<ComboBox.ContextMenu>
+								<ContextMenu Style="{DynamicResource MaterialDesignContextMenu}">
+									<MenuItem Command="{Binding ClearEmulatorOptions_Click}"
+									          FontSize="10"
+									          Header="重置选择" />
+								</ContextMenu>
+							</ComboBox.ContextMenu>
+							<i:Interaction.Triggers>
+								<i:EventTrigger EventName="SelectionChanged">
+									<i:InvokeCommandAction Command="{Binding Emulator_SelectionChanged}"
+									                       CommandParameter="{Binding ElementName=_Window}" />
+								</i:EventTrigger>
+							</i:Interaction.Triggers>
+						</ComboBox>
+					</StackPanel>
+					<Button x:Name="ClearEmulator"
+					        Width="120"
+					        Margin="20,1"
+					        Command="{Binding ClearEmulatorOptions_Click}"
+					        Cursor="Hand"
+					        Style="{DynamicResource MaterialDesignRaisedButton}">
+						重置选择
+					</Button>
+					<Button x:Name="ScreenShot"
+					        Width="120"
+					        Margin="20,1"
+					        Command="{Binding ScreenShot_Click}"
+					        Cursor="Hand"
+					        Style="{DynamicResource MaterialDesignRaisedButton}">
+						截图
+					</Button>
+					<Button x:Name="Open"
+					        Width="120"
+					        Margin="20,1"
+					        Command="{Binding Open_Click}"
+					        Style="{DynamicResource MaterialDesignRaisedButton}">
+						载入
+					</Button>
+					<Button x:Name="Save"
+					        Width="120"
+					        Margin="20,1"
+					        Command="{Binding Save_Click}"
+					        Style="{DynamicResource MaterialDesignRaisedButton}">
+						保存
+					</Button>
+					<Button x:Name="TurnRight"
+					        Width="120"
+					        Margin="20,1"
+					        Command="{Binding TurnRight_Click}"
+					        Style="{DynamicResource MaterialDesignRaisedButton}">
+						右转
+					</Button>
+					<Button x:Name="Test"
+					        Width="120"
+					        Margin="20,1"
+					        Command="{Binding Test_Click}"
+					        CommandParameter="{Binding ElementName=_Window}"
+					        Style="{DynamicResource MaterialDesignRaisedButton}">
+						测试
+					</Button>
 
-                    <StackPanel
-                        Width="120"
-                        Margin="20,7"
-                        Orientation="Horizontal"
-                        ToolTip="相似度">
-                        <Viewbox
-                            Width="24"
-                            Height="24"
-                            Stretch="Uniform">
-                            <Canvas Width="48" Height="48">
-                                <Rectangle
-                                    Width="48"
-                                    Height="48"
-                                    Fill="#03ffffff" />
-                                <Path
-                                    Stroke="#FF666666"
-                                    StrokeEndLineCap="Round"
-                                    StrokeLineJoin="Round"
-                                    StrokeStartLineCap="Round"
-                                    StrokeThickness="3">
-                                    <Path.Data>
-                                        <PathGeometry Figures="M44 14L34 4L30.25 7.75L26.5 11.5L19 19L11.5 26.5L7.75 30.25L4 34L14 44L44 14Z" FillRule="NonZero" />
-                                    </Path.Data>
-                                </Path>
-                                <Path
-                                    Stroke="#FF666666"
-                                    StrokeEndLineCap="Round"
-                                    StrokeLineJoin="Round"
-                                    StrokeStartLineCap="Round"
-                                    StrokeThickness="3">
-                                    <Path.Data>
-                                        <PathGeometry Figures="M30.25 7.75L7.75 30.25" FillRule="NonZero" />
-                                    </Path.Data>
-                                </Path>
-                                <Path
-                                    Stroke="#FF666666"
-                                    StrokeEndLineCap="Round"
-                                    StrokeLineJoin="Round"
-                                    StrokeStartLineCap="Round"
-                                    StrokeThickness="3">
-                                    <Path.Data>
-                                        <PathGeometry Figures="M9 29L13 33" FillRule="NonZero" />
-                                    </Path.Data>
-                                </Path>
-                                <Path
-                                    Stroke="#FF666666"
-                                    StrokeEndLineCap="Round"
-                                    StrokeLineJoin="Round"
-                                    StrokeStartLineCap="Round"
-                                    StrokeThickness="3">
-                                    <Path.Data>
-                                        <PathGeometry Figures="M14 24L20 30" FillRule="NonZero" />
-                                    </Path.Data>
-                                </Path>
-                                <Path
-                                    Stroke="#FF666666"
-                                    StrokeEndLineCap="Round"
-                                    StrokeLineJoin="Round"
-                                    StrokeStartLineCap="Round"
-                                    StrokeThickness="3">
-                                    <Path.Data>
-                                        <PathGeometry Figures="M19 19L23 23" FillRule="NonZero" />
-                                    </Path.Data>
-                                </Path>
-                                <Path
-                                    Stroke="#FF666666"
-                                    StrokeEndLineCap="Round"
-                                    StrokeLineJoin="Round"
-                                    StrokeStartLineCap="Round"
-                                    StrokeThickness="3">
-                                    <Path.Data>
-                                        <PathGeometry Figures="M24 14L30 20" FillRule="NonZero" />
-                                    </Path.Data>
-                                </Path>
-                                <Path
-                                    Stroke="#FF666666"
-                                    StrokeEndLineCap="Round"
-                                    StrokeLineJoin="Round"
-                                    StrokeStartLineCap="Round"
-                                    StrokeThickness="3">
-                                    <Path.Data>
-                                        <PathGeometry Figures="M29 9L33 13" FillRule="NonZero" />
-                                    </Path.Data>
-                                </Path>
-                            </Canvas>
-                        </Viewbox>
-                        <ComboBox
-                            x:Name="Sim"
-                            Width="85"
-                            Margin="10,0,0,0"
-                            HorizontalContentAlignment="Center"
-                            SelectedIndex="{Binding SimSelectedIndex, Mode=TwoWay}">
-                            <ComboBoxItem>100</ComboBoxItem>
-                            <ComboBoxItem>95</ComboBoxItem>
-                            <ComboBoxItem>90</ComboBoxItem>
-                            <ComboBoxItem>85</ComboBoxItem>
-                            <ComboBoxItem>80</ComboBoxItem>
-                            <ComboBoxItem>自定义</ComboBoxItem>
-                        </ComboBox>
-                    </StackPanel>
-                    <StackPanel
-                        Width="120"
-                        Margin="20,7"
-                        Orientation="Horizontal"
-                        ToolTip="返回结果">
-                        <Viewbox
-                            Width="24"
-                            Height="24"
-                            Stretch="Uniform">
-                            <Canvas Width="48" Height="48">
-                                <Canvas>
-                                    <Rectangle
-                                        Width="48"
-                                        Height="48"
-                                        Fill="#03ffffff"
-                                        StrokeLineJoin="Round"
-                                        StrokeThickness="4" />
-                                    <Canvas Name="g24">
-                                        <Canvas.RenderTransform>
-                                            <TranslateTransform X="4.000000" Y="4.000000" />
-                                        </Canvas.RenderTransform>
-                                        <Path
-                                            Stroke="#FF666666"
-                                            StrokeLineJoin="Round"
-                                            StrokeThickness="4">
-                                            <Path.Data>
-                                                <PathGeometry Figures="M20 38 C32 38 34 27.5323633 34 24 C34 20.837862 34 16.1711953 34 10 L6 10 C6 13.442296 6 18.1089627 6 24 C6 27.450596 8 38 20 38 Z" FillRule="NonZero" />
-                                            </Path.Data>
-                                        </Path>
-                                        <Path
-                                            Stroke="#FF666666"
-                                            StrokeEndLineCap="Round"
-                                            StrokeLineJoin="Round"
-                                            StrokeStartLineCap="Round"
-                                            StrokeThickness="4">
-                                            <Path.Data>
-                                                <PathGeometry Figures="M3.55271368e-15 4 L6 10" FillRule="EvenOdd" />
-                                            </Path.Data>
-                                        </Path>
-                                        <Path
-                                            Stroke="#FF666666"
-                                            StrokeEndLineCap="Round"
-                                            StrokeLineJoin="Round"
-                                            StrokeStartLineCap="Round"
-                                            StrokeThickness="4">
-                                            <Path.Data>
-                                                <PathGeometry Figures="M40 4 L34 10" FillRule="EvenOdd" />
-                                            </Path.Data>
-                                        </Path>
-                                        <Path
-                                            Stroke="#FF666666"
-                                            StrokeEndLineCap="Round"
-                                            StrokeLineJoin="Round"
-                                            StrokeStartLineCap="Round"
-                                            StrokeThickness="4">
-                                            <Path.Data>
-                                                <PathGeometry Figures="M0 23 L6 23" FillRule="EvenOdd" />
-                                            </Path.Data>
-                                        </Path>
-                                        <Path
-                                            Stroke="#FF666666"
-                                            StrokeEndLineCap="Round"
-                                            StrokeLineJoin="Round"
-                                            StrokeStartLineCap="Round"
-                                            StrokeThickness="4">
-                                            <Path.Data>
-                                                <PathGeometry Figures="M40 23 L34 23" FillRule="EvenOdd" />
-                                            </Path.Data>
-                                        </Path>
-                                        <Path
-                                            Stroke="#FF666666"
-                                            StrokeEndLineCap="Round"
-                                            StrokeLineJoin="Round"
-                                            StrokeStartLineCap="Round"
-                                            StrokeThickness="4">
-                                            <Path.Data>
-                                                <PathGeometry Figures="M3 40 L9 34" FillRule="EvenOdd" />
-                                            </Path.Data>
-                                        </Path>
-                                        <Path
-                                            Stroke="#FF666666"
-                                            StrokeEndLineCap="Round"
-                                            StrokeLineJoin="Round"
-                                            StrokeStartLineCap="Round"
-                                            StrokeThickness="4">
-                                            <Path.Data>
-                                                <PathGeometry Figures="M37 40 L31 34" FillRule="EvenOdd" />
-                                            </Path.Data>
-                                        </Path>
-                                        <Path
-                                            Stroke="#FF666666"
-                                            StrokeEndLineCap="Round"
-                                            StrokeLineJoin="Round"
-                                            StrokeStartLineCap="Round"
-                                            StrokeThickness="4">
-                                            <Path.Data>
-                                                <PathGeometry Figures="M20 38 L20 10" FillRule="EvenOdd" />
-                                            </Path.Data>
-                                        </Path>
-                                        <Path
-                                            Stroke="#FF666666"
-                                            StrokeEndLineCap="Round"
-                                            StrokeLineJoin="Round"
-                                            StrokeStartLineCap="Round"
-                                            StrokeThickness="4">
-                                            <Path.Data>
-                                                <PathGeometry Figures="M10.920475 35.0408965 C13.002464 36.7831828 15.9245088 38 20 38 L20 38 C24.1112534 38 27.0487287 36.7713317 29.1341392 35.0138386" FillRule="EvenOdd" />
-                                            </Path.Data>
-                                        </Path>
-                                        <Path
-                                            Stroke="#FF666666"
-                                            StrokeLineJoin="Round"
-                                            StrokeThickness="4">
-                                            <Path.Data>
-                                                <PathGeometry Figures="M28 8.33333333 C28 3.73096042 24.418278 0 20 0 C15.581722 0 12 3.73096042 12 8.33333333 L12 10 L28 10 L28 8.33333333 Z" FillRule="NonZero" />
-                                            </Path.Data>
-                                        </Path>
-                                    </Canvas>
-                                </Canvas>
-                            </Canvas>
-                        </Viewbox>
-                        <TextBox
-                            x:Name="Result"
-                            Width="85"
-                            Margin="10,0,0,0"
-                            HorizontalContentAlignment="Center"
-                            IsReadOnly="True"
-                            Text="{Binding TestResult}" />
-                    </StackPanel>
-                    <StackPanel
-                        Width="120"
-                        Margin="20,7"
-                        Orientation="Horizontal"
-                        ToolTip="图色格式">
-                        <Viewbox
-                            Width="24"
-                            Height="24"
-                            Stretch="Uniform">
-                            <Canvas Width="48" Height="48">
-                                <Path
-                                    Stroke="#FF666666"
-                                    StrokeEndLineCap="Round"
-                                    StrokeLineJoin="Round"
-                                    StrokeStartLineCap="Round"
-                                    StrokeThickness="4">
-                                    <Path.Data>
-                                        <PathGeometry Figures="M16 13L4 25.4322L16 37" FillRule="NonZero" />
-                                    </Path.Data>
-                                </Path>
-                                <Path
-                                    Stroke="#FF666666"
-                                    StrokeEndLineCap="Round"
-                                    StrokeLineJoin="Round"
-                                    StrokeStartLineCap="Round"
-                                    StrokeThickness="4">
-                                    <Path.Data>
-                                        <PathGeometry Figures="M32 13L44 25.4322L32 37" FillRule="NonZero" />
-                                    </Path.Data>
-                                </Path>
-                                <Path
-                                    Stroke="#FF666666"
-                                    StrokeEndLineCap="Round"
-                                    StrokeStartLineCap="Round"
-                                    StrokeThickness="4">
-                                    <Path.Data>
-                                        <PathGeometry Figures="M28 4L21 44" FillRule="NonZero" />
-                                    </Path.Data>
-                                </Path>
-                            </Canvas>
-                        </Viewbox>
-                        <ComboBox
-                            x:Name="Format"
-                            Width="85"
-                            Margin="10,0,0,0"
-                            HorizontalContentAlignment="Center"
-                            SelectedIndex="{Binding FormatSelectedIndex, Mode=TwoWay}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="SelectionChanged">
-                                    <i:InvokeCommandAction Command="{Binding Format_SelectionChanged}" CommandParameter="{Binding ElementName=_Window}" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                            <ComboBoxItem>多点比色</ComboBoxItem>
-                            <ComboBoxItem>大漠/乐玩找色</ComboBoxItem>
-                            <ComboBoxItem>按键找色</ComboBoxItem>
-                            <ComboBoxItem>按键比色</ComboBoxItem>
-                            <ComboBoxItem>触动找色</ComboBoxItem>
-                            <ComboBoxItem>触动比色</ComboBoxItem>
-                            <ComboBoxItem>AJ找色</ComboBoxItem>
-                            <ComboBoxItem>EC找色</ComboBoxItem>
-                            <ComboBoxItem>自定义找色</ComboBoxItem>
-                            <ComboBoxItem>自定义比色</ComboBoxItem>
-                            <ComboBoxItem>锚点比色</ComboBoxItem>
-                            <ComboBoxItem>锚点找色</ComboBoxItem>
-                        </ComboBox>
-                    </StackPanel>
-                    <StackPanel
-                        Width="120"
-                        Margin="20,7"
-                        Orientation="Horizontal"
-                        ToolTip="范围">
-                        <Viewbox
-                            Width="24"
-                            Height="24"
-                            Stretch="Uniform">
-                            <Canvas Width="48" Height="48">
-                                <Path
-                                    Stroke="#FF666666"
-                                    StrokeEndLineCap="Round"
-                                    StrokeLineJoin="Round"
-                                    StrokeStartLineCap="Round"
-                                    StrokeThickness="4">
-                                    <Path.Data>
-                                        <PathGeometry Figures="M33 6H42V15" FillRule="NonZero" />
-                                    </Path.Data>
-                                </Path>
-                                <Path
-                                    Stroke="#FF666666"
-                                    StrokeEndLineCap="Round"
-                                    StrokeLineJoin="Round"
-                                    StrokeStartLineCap="Round"
-                                    StrokeThickness="4">
-                                    <Path.Data>
-                                        <PathGeometry Figures="M42 33V42H33" FillRule="NonZero" />
-                                    </Path.Data>
-                                </Path>
-                                <Path
-                                    Stroke="#FF666666"
-                                    StrokeEndLineCap="Round"
-                                    StrokeLineJoin="Round"
-                                    StrokeStartLineCap="Round"
-                                    StrokeThickness="4">
-                                    <Path.Data>
-                                        <PathGeometry Figures="M15 42H6V33" FillRule="NonZero" />
-                                    </Path.Data>
-                                </Path>
-                                <Path
-                                    Stroke="#FF666666"
-                                    StrokeEndLineCap="Round"
-                                    StrokeLineJoin="Round"
-                                    StrokeStartLineCap="Round"
-                                    StrokeThickness="4">
-                                    <Path.Data>
-                                        <PathGeometry Figures="M6 15V6H15" FillRule="NonZero" />
-                                    </Path.Data>
-                                </Path>
-                            </Canvas>
-                        </Viewbox>
-                        <TextBox
-                            x:Name="Range"
-                            Width="85"
-                            Margin="10,0,0,0"
-                            Text="{Binding Range, Mode=TwoWay}" />
-                    </StackPanel>
-                    <Button
-                        x:Name="CutImg"
-                        Width="120"
-                        Margin="20,7"
-                        Command="{Binding CutBmp_Click}"
-                        Style="{DynamicResource MaterialDesignRaisedButton}">
-                        裁图
-                    </Button>
-                    <Button
-                        x:Name="Create"
-                        Width="120"
-                        Margin="20,7"
-                        Command="{Binding Create_Click}"
-                        Style="{DynamicResource MaterialDesignRaisedButton}">
-                        生成
-                    </Button>
-                    <TextBox
-                        x:Name="ColorString"
-                        Width="120"
-                        Height="120"
-                        Margin="20,7"
-                        Padding="0"
-                        materialDesign:HintAssist.FloatingOffset="0, -18"
-                        materialDesign:HintAssist.FloatingScale="1"
-                        materialDesign:HintAssist.Hint="生成字符串"
-                        materialDesign:TextFieldAssist.TextBoxViewMargin="1 0 1 0"
-                        IsReadOnly="True"
-                        Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
-                        Text="{Binding CreateStr}"
-                        TextWrapping="Wrap" />
-                    <Button
-                        x:Name="Copy"
-                        Width="120"
-                        Margin="20,7"
-                        Click="Copy_Click"
-                        Style="{DynamicResource MaterialDesignRaisedButton}">
-                        复制
-                    </Button>
-                    <Button
-                        x:Name="Clear"
-                        Width="120"
-                        Margin="20,7"
-                        Command="{Binding Clear_Click}"
-                        Style="{DynamicResource MaterialDesignRaisedButton}">
-                        清空
-                    </Button>
-                </StackPanel>
-            </ScrollViewer>
-        </Grid>
-        <StackPanel
-            x:Name="Panel_3"
-            Width="auto"
-            Height="auto"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Top"
-            SizeChanged="Window_SizeChanged">
-            <Border
-                Margin="15,15"
-                BorderBrush="#666666"
-                BorderThickness="1"
-                Style="{DynamicResource MaterialDesignToolBarMainPanelBorderStyle}">
-                <DataGrid
-                    x:Name="Color_Info"
-                    materialDesign:DataGridAssist.ColumnHeaderPadding="4,6,4,6"
-                    AllowDrop="true"
-                    AutoGenerateColumns="False"
-                    CanUserAddRows="False"
-                    CanUserSortColumns="False"
-                    ColumnHeaderStyle="{DynamicResource MaterialDesignDataGridColumnHeader_Center}"
-                    FontSize="16"
-                    ItemsSource="{Binding ColorInfos, Mode=TwoWay}"
-                    RowHeaderStyle="{DynamicResource MaterialDesignDataGridRowHeader}"
-                    RowStyle="{DynamicResource MaterialDesignDataGridRow}"
-                    SelectedIndex="{Binding ColorInfoSelect, Mode=TwoWay}"
-                    SelectionMode="Extended"
-                    SelectionUnit="FullRow"
-                    Style="{DynamicResource MaterialDesignDataGrid}">
-                    <DataGrid.Columns>
-                        <DataGridTemplateColumn Header="序号" IsReadOnly="True">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock HorizontalAlignment="Center" Text="{Binding Index}" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <materialDesign:DataGridComboBoxColumn
-                            x:Name="TheAnchors"
-                            Header="锚点"
-                            ItemsSourceBinding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Path=DataContext.AnchorsValue}"
-                            SelectedValueBinding="{Binding Anchors}"
-                            Visibility="Collapsed" />
-                        <DataGridTemplateColumn Header="坐标" IsReadOnly="True">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock HorizontalAlignment="Center" Text="{Binding PointStr}" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="颜色" IsReadOnly="True">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock
-                                        HorizontalAlignment="Center"
-                                        Foreground="{Binding Brush_1}"
-                                        Text="{Binding ColorStr}" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn
-                            x:Name="OffsetList"
-                            Header="偏色"
-                            IsReadOnly="True"
-                            Visibility="Hidden">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock HorizontalAlignment="Center" Text="{Binding OffsetColor, Mode=TwoWay}" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="状态">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <CheckBox
-                                        HorizontalAlignment="Center"
-                                        Background="{Binding Brush_2}"
-                                        IsChecked="{Binding IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
+					<StackPanel Width="120"
+					            Margin="20,7"
+					            Orientation="Horizontal"
+					            ToolTip="相似度">
+						<Viewbox Width="24"
+						         Height="24"
+						         Stretch="Uniform">
+							<Canvas Width="48"
+							        Height="48">
+								<Rectangle Width="48"
+								           Height="48"
+								           Fill="#03ffffff" />
+								<Path Stroke="#FF666666"
+								      StrokeEndLineCap="Round"
+								      StrokeLineJoin="Round"
+								      StrokeStartLineCap="Round"
+								      StrokeThickness="3">
+									<Path.Data>
+										<PathGeometry Figures="M44 14L34 4L30.25 7.75L26.5 11.5L19 19L11.5 26.5L7.75 30.25L4 34L14 44L44 14Z"
+										              FillRule="NonZero" />
+									</Path.Data>
+								</Path>
+								<Path Stroke="#FF666666"
+								      StrokeEndLineCap="Round"
+								      StrokeLineJoin="Round"
+								      StrokeStartLineCap="Round"
+								      StrokeThickness="3">
+									<Path.Data>
+										<PathGeometry Figures="M30.25 7.75L7.75 30.25"
+										              FillRule="NonZero" />
+									</Path.Data>
+								</Path>
+								<Path Stroke="#FF666666"
+								      StrokeEndLineCap="Round"
+								      StrokeLineJoin="Round"
+								      StrokeStartLineCap="Round"
+								      StrokeThickness="3">
+									<Path.Data>
+										<PathGeometry Figures="M9 29L13 33"
+										              FillRule="NonZero" />
+									</Path.Data>
+								</Path>
+								<Path Stroke="#FF666666"
+								      StrokeEndLineCap="Round"
+								      StrokeLineJoin="Round"
+								      StrokeStartLineCap="Round"
+								      StrokeThickness="3">
+									<Path.Data>
+										<PathGeometry Figures="M14 24L20 30"
+										              FillRule="NonZero" />
+									</Path.Data>
+								</Path>
+								<Path Stroke="#FF666666"
+								      StrokeEndLineCap="Round"
+								      StrokeLineJoin="Round"
+								      StrokeStartLineCap="Round"
+								      StrokeThickness="3">
+									<Path.Data>
+										<PathGeometry Figures="M19 19L23 23"
+										              FillRule="NonZero" />
+									</Path.Data>
+								</Path>
+								<Path Stroke="#FF666666"
+								      StrokeEndLineCap="Round"
+								      StrokeLineJoin="Round"
+								      StrokeStartLineCap="Round"
+								      StrokeThickness="3">
+									<Path.Data>
+										<PathGeometry Figures="M24 14L30 20"
+										              FillRule="NonZero" />
+									</Path.Data>
+								</Path>
+								<Path Stroke="#FF666666"
+								      StrokeEndLineCap="Round"
+								      StrokeLineJoin="Round"
+								      StrokeStartLineCap="Round"
+								      StrokeThickness="3">
+									<Path.Data>
+										<PathGeometry Figures="M29 9L33 13"
+										              FillRule="NonZero" />
+									</Path.Data>
+								</Path>
+							</Canvas>
+						</Viewbox>
+						<ComboBox x:Name="Sim"
+						          Width="85"
+						          Margin="10,0,0,0"
+						          HorizontalContentAlignment="Center"
+						          SelectedIndex="{Binding SimSelectedIndex, Mode=TwoWay}">
+							<ComboBoxItem>100</ComboBoxItem>
+							<ComboBoxItem>95</ComboBoxItem>
+							<ComboBoxItem>90</ComboBoxItem>
+							<ComboBoxItem>85</ComboBoxItem>
+							<ComboBoxItem>80</ComboBoxItem>
+							<ComboBoxItem>自定义</ComboBoxItem>
+						</ComboBox>
+					</StackPanel>
+					<StackPanel Width="120"
+					            Margin="20,7"
+					            Orientation="Horizontal"
+					            ToolTip="返回结果">
+						<Viewbox Width="24"
+						         Height="24"
+						         Stretch="Uniform">
+							<Canvas Width="48"
+							        Height="48">
+								<Canvas>
+									<Rectangle Width="48"
+									           Height="48"
+									           Fill="#03ffffff"
+									           StrokeLineJoin="Round"
+									           StrokeThickness="4" />
+									<Canvas Name="g24">
+										<Canvas.RenderTransform>
+											<TranslateTransform X="4.000000" Y="4.000000" />
+										</Canvas.RenderTransform>
+										<Path Stroke="#FF666666"
+										      StrokeLineJoin="Round"
+										      StrokeThickness="4">
+											<Path.Data>
+												<PathGeometry Figures="M20 38 C32 38 34 27.5323633 34 24 C34 20.837862 34 16.1711953 34 10 L6 10 C6 13.442296 6 18.1089627 6 24 C6 27.450596 8 38 20 38 Z"
+												              FillRule="NonZero" />
+											</Path.Data>
+										</Path>
+										<Path Stroke="#FF666666"
+										      StrokeEndLineCap="Round"
+										      StrokeLineJoin="Round"
+										      StrokeStartLineCap="Round"
+										      StrokeThickness="4">
+											<Path.Data>
+												<PathGeometry Figures="M3.55271368e-15 4 L6 10"
+												              FillRule="EvenOdd" />
+											</Path.Data>
+										</Path>
+										<Path Stroke="#FF666666"
+										      StrokeEndLineCap="Round"
+										      StrokeLineJoin="Round"
+										      StrokeStartLineCap="Round"
+										      StrokeThickness="4">
+											<Path.Data>
+												<PathGeometry Figures="M40 4 L34 10"
+												              FillRule="EvenOdd" />
+											</Path.Data>
+										</Path>
+										<Path Stroke="#FF666666"
+										      StrokeEndLineCap="Round"
+										      StrokeLineJoin="Round"
+										      StrokeStartLineCap="Round"
+										      StrokeThickness="4">
+											<Path.Data>
+												<PathGeometry Figures="M0 23 L6 23"
+												              FillRule="EvenOdd" />
+											</Path.Data>
+										</Path>
+										<Path Stroke="#FF666666"
+										      StrokeEndLineCap="Round"
+										      StrokeLineJoin="Round"
+										      StrokeStartLineCap="Round"
+										      StrokeThickness="4">
+											<Path.Data>
+												<PathGeometry Figures="M40 23 L34 23"
+												              FillRule="EvenOdd" />
+											</Path.Data>
+										</Path>
+										<Path Stroke="#FF666666"
+										      StrokeEndLineCap="Round"
+										      StrokeLineJoin="Round"
+										      StrokeStartLineCap="Round"
+										      StrokeThickness="4">
+											<Path.Data>
+												<PathGeometry Figures="M3 40 L9 34"
+												              FillRule="EvenOdd" />
+											</Path.Data>
+										</Path>
+										<Path Stroke="#FF666666"
+										      StrokeEndLineCap="Round"
+										      StrokeLineJoin="Round"
+										      StrokeStartLineCap="Round"
+										      StrokeThickness="4">
+											<Path.Data>
+												<PathGeometry Figures="M37 40 L31 34"
+												              FillRule="EvenOdd" />
+											</Path.Data>
+										</Path>
+										<Path Stroke="#FF666666"
+										      StrokeEndLineCap="Round"
+										      StrokeLineJoin="Round"
+										      StrokeStartLineCap="Round"
+										      StrokeThickness="4">
+											<Path.Data>
+												<PathGeometry Figures="M20 38 L20 10"
+												              FillRule="EvenOdd" />
+											</Path.Data>
+										</Path>
+										<Path Stroke="#FF666666"
+										      StrokeEndLineCap="Round"
+										      StrokeLineJoin="Round"
+										      StrokeStartLineCap="Round"
+										      StrokeThickness="4">
+											<Path.Data>
+												<PathGeometry Figures="M10.920475 35.0408965 C13.002464 36.7831828 15.9245088 38 20 38 L20 38 C24.1112534 38 27.0487287 36.7713317 29.1341392 35.0138386"
+												              FillRule="EvenOdd" />
+											</Path.Data>
+										</Path>
+										<Path Stroke="#FF666666"
+										      StrokeLineJoin="Round"
+										      StrokeThickness="4">
+											<Path.Data>
+												<PathGeometry Figures="M28 8.33333333 C28 3.73096042 24.418278 0 20 0 C15.581722 0 12 3.73096042 12 8.33333333 L12 10 L28 10 L28 8.33333333 Z"
+												              FillRule="NonZero" />
+											</Path.Data>
+										</Path>
+									</Canvas>
+								</Canvas>
+							</Canvas>
+						</Viewbox>
+						<TextBox x:Name="Result"
+						         Width="85"
+						         Margin="10,0,0,0"
+						         HorizontalContentAlignment="Center"
+						         IsReadOnly="True"
+						         Text="{Binding TestResult}" />
+					</StackPanel>
+					<StackPanel Width="120"
+					            Margin="20,7"
+					            Orientation="Horizontal"
+					            ToolTip="图色格式">
+						<Viewbox Width="24"
+						         Height="24"
+						         Stretch="Uniform">
+							<Canvas Width="48"
+							        Height="48">
+								<Path Stroke="#FF666666"
+								      StrokeEndLineCap="Round"
+								      StrokeLineJoin="Round"
+								      StrokeStartLineCap="Round"
+								      StrokeThickness="4">
+									<Path.Data>
+										<PathGeometry Figures="M16 13L4 25.4322L16 37"
+										              FillRule="NonZero" />
+									</Path.Data>
+								</Path>
+								<Path Stroke="#FF666666"
+								      StrokeEndLineCap="Round"
+								      StrokeLineJoin="Round"
+								      StrokeStartLineCap="Round"
+								      StrokeThickness="4">
+									<Path.Data>
+										<PathGeometry Figures="M32 13L44 25.4322L32 37"
+										              FillRule="NonZero" />
+									</Path.Data>
+								</Path>
+								<Path Stroke="#FF666666"
+								      StrokeEndLineCap="Round"
+								      StrokeStartLineCap="Round"
+								      StrokeThickness="4">
+									<Path.Data>
+										<PathGeometry Figures="M28 4L21 44"
+										              FillRule="NonZero" />
+									</Path.Data>
+								</Path>
+							</Canvas>
+						</Viewbox>
+						<ComboBox x:Name="Format"
+						          Width="85"
+						          Margin="10,0,0,0"
+						          HorizontalContentAlignment="Center"
+						          SelectedIndex="{Binding FormatSelectedIndex, Mode=TwoWay}">
+							<i:Interaction.Triggers>
+								<i:EventTrigger EventName="SelectionChanged">
+									<i:InvokeCommandAction Command="{Binding Format_SelectionChanged}"
+									                       CommandParameter="{Binding ElementName=_Window}" />
+								</i:EventTrigger>
+							</i:Interaction.Triggers>
+							<ComboBoxItem>多点比色</ComboBoxItem>
+							<ComboBoxItem>大漠/乐玩找色</ComboBoxItem>
+							<ComboBoxItem>按键找色</ComboBoxItem>
+							<ComboBoxItem>按键比色</ComboBoxItem>
+							<ComboBoxItem>触动找色</ComboBoxItem>
+							<ComboBoxItem>触动比色</ComboBoxItem>
+							<ComboBoxItem>AJ找色</ComboBoxItem>
+							<ComboBoxItem>EC找色</ComboBoxItem>
+							<ComboBoxItem>自定义找色</ComboBoxItem>
+							<ComboBoxItem>自定义比色</ComboBoxItem>
+							<ComboBoxItem>锚点比色</ComboBoxItem>
+							<ComboBoxItem>锚点找色</ComboBoxItem>
+						</ComboBox>
+					</StackPanel>
+					<StackPanel Width="120"
+					            Margin="20,7"
+					            Orientation="Horizontal"
+					            ToolTip="范围">
+						<Viewbox Width="24"
+						         Height="24"
+						         Stretch="Uniform">
+							<Canvas Width="48"
+							        Height="48">
+								<Path Stroke="#FF666666"
+								      StrokeEndLineCap="Round"
+								      StrokeLineJoin="Round"
+								      StrokeStartLineCap="Round"
+								      StrokeThickness="4">
+									<Path.Data>
+										<PathGeometry Figures="M33 6H42V15"
+										              FillRule="NonZero" />
+									</Path.Data>
+								</Path>
+								<Path Stroke="#FF666666"
+								      StrokeEndLineCap="Round"
+								      StrokeLineJoin="Round"
+								      StrokeStartLineCap="Round"
+								      StrokeThickness="4">
+									<Path.Data>
+										<PathGeometry Figures="M42 33V42H33"
+										              FillRule="NonZero" />
+									</Path.Data>
+								</Path>
+								<Path Stroke="#FF666666"
+								      StrokeEndLineCap="Round"
+								      StrokeLineJoin="Round"
+								      StrokeStartLineCap="Round"
+								      StrokeThickness="4">
+									<Path.Data>
+										<PathGeometry Figures="M15 42H6V33"
+										              FillRule="NonZero" />
+									</Path.Data>
+								</Path>
+								<Path Stroke="#FF666666"
+								      StrokeEndLineCap="Round"
+								      StrokeLineJoin="Round"
+								      StrokeStartLineCap="Round"
+								      StrokeThickness="4">
+									<Path.Data>
+										<PathGeometry Figures="M6 15V6H15"
+										              FillRule="NonZero" />
+									</Path.Data>
+								</Path>
+							</Canvas>
+						</Viewbox>
+						<TextBox x:Name="Range"
+						         Width="85"
+						         Margin="10,0,0,0"
+						         Text="{Binding Range, Mode=TwoWay}" />
+					</StackPanel>
+					<Button x:Name="CutImg"
+					        Width="120"
+					        Margin="20,7"
+					        Command="{Binding CutBmp_Click}"
+					        Style="{DynamicResource MaterialDesignRaisedButton}">
+						裁图
+					</Button>
+					<Button x:Name="Create"
+					        Width="120"
+					        Margin="20,7"
+					        Command="{Binding Create_Click}"
+					        Style="{DynamicResource MaterialDesignRaisedButton}">
+						生成
+					</Button>
+					<TextBox x:Name="ColorString"
+					         Width="120"
+					         Height="120"
+					         Margin="20,7"
+					         Padding="0"
+					         materialDesign:HintAssist.FloatingOffset="0, -18"
+					         materialDesign:HintAssist.FloatingScale="1"
+					         materialDesign:HintAssist.Hint="生成字符串"
+					         materialDesign:TextFieldAssist.TextBoxViewMargin="1 0 1 0"
+					         IsReadOnly="True"
+					         Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+					         Text="{Binding CreateStr}"
+					         TextWrapping="Wrap" />
+					<Button x:Name="Copy"
+					        Width="120"
+					        Margin="20,7"
+					        Click="Copy_Click"
+					        Style="{DynamicResource MaterialDesignRaisedButton}">
+						复制
+					</Button>
+					<Button x:Name="Clear"
+					        Width="120"
+					        Margin="20,7"
+					        Command="{Binding Clear_Click}"
+					        Style="{DynamicResource MaterialDesignRaisedButton}">
+						清空
+					</Button>
+				</StackPanel>
+			</ScrollViewer>
+		</Grid>
+		<StackPanel x:Name="Panel_3"
+		            Width="auto"
+		            Height="auto"
+		            HorizontalAlignment="Right"
+		            VerticalAlignment="Top"
+		            SizeChanged="Window_SizeChanged">
+			<Border Margin="15,15"
+			        BorderBrush="#666666"
+			        BorderThickness="1"
+			        Style="{DynamicResource MaterialDesignToolBarMainPanelBorderStyle}">
+				<DataGrid x:Name="Color_Info"
+				          materialDesign:DataGridAssist.ColumnHeaderPadding="4,6,4,6"
+				          AllowDrop="true"
+				          AutoGenerateColumns="False"
+				          CanUserAddRows="False"
+				          CanUserSortColumns="False"
+				          ColumnHeaderStyle="{DynamicResource MaterialDesignDataGridColumnHeader_Center}"
+				          FontSize="16"
+				          ItemsSource="{Binding ColorInfos, Mode=TwoWay}"
+				          RowHeaderStyle="{DynamicResource MaterialDesignDataGridRowHeader}"
+				          RowStyle="{DynamicResource MaterialDesignDataGridRow}"
+				          SelectedIndex="{Binding ColorInfoSelect, Mode=TwoWay}"
+				          SelectionMode="Extended"
+				          SelectionUnit="FullRow"
+				          Style="{DynamicResource MaterialDesignDataGrid}">
+					<DataGrid.Columns>
+						<DataGridTemplateColumn Header="序号"
+						                        IsReadOnly="True">
+							<DataGridTemplateColumn.CellTemplate>
+								<DataTemplate>
+									<TextBlock HorizontalAlignment="Center"
+									           Text="{Binding Index}" />
+								</DataTemplate>
+							</DataGridTemplateColumn.CellTemplate>
+						</DataGridTemplateColumn>
+						<materialDesign:DataGridComboBoxColumn x:Name="TheAnchors"
+						                                       Header="锚点"
+						                                       ItemsSourceBinding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Path=DataContext.AnchorsValue}"
+						                                       SelectedValueBinding="{Binding Anchors}"
+						                                       Visibility="Collapsed" />
+						<DataGridTemplateColumn Header="坐标"
+						                        IsReadOnly="True">
+							<DataGridTemplateColumn.CellTemplate>
+								<DataTemplate>
+									<TextBlock HorizontalAlignment="Center"
+									           Text="{Binding PointStr}" />
+								</DataTemplate>
+							</DataGridTemplateColumn.CellTemplate>
+						</DataGridTemplateColumn>
+						<DataGridTemplateColumn Header="颜色"
+						                        IsReadOnly="True">
+							<DataGridTemplateColumn.CellTemplate>
+								<DataTemplate>
+									<TextBlock HorizontalAlignment="Center"
+									           Foreground="{Binding Brush_1}"
+									           Text="{Binding ColorStr}" />
+								</DataTemplate>
+							</DataGridTemplateColumn.CellTemplate>
+						</DataGridTemplateColumn>
+						<DataGridTemplateColumn x:Name="OffsetList"
+						                        Header="偏色"
+						                        IsReadOnly="True"
+						                        Visibility="Hidden">
+							<DataGridTemplateColumn.CellTemplate>
+								<DataTemplate>
+									<TextBlock HorizontalAlignment="Center"
+									           Text="{Binding OffsetColor, Mode=TwoWay}" />
+								</DataTemplate>
+							</DataGridTemplateColumn.CellTemplate>
+						</DataGridTemplateColumn>
+						<DataGridTemplateColumn Header="状态">
+							<DataGridTemplateColumn.CellTemplate>
+								<DataTemplate>
+									<CheckBox HorizontalAlignment="Center"
+									          Background="{Binding Brush_2}"
+									          IsChecked="{Binding IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+								</DataTemplate>
+							</DataGridTemplateColumn.CellTemplate>
+						</DataGridTemplateColumn>
+					</DataGrid.Columns>
 
-                    <DataGrid.ContextMenu>
-                        <ContextMenu Style="{DynamicResource MaterialDesignContextMenu}">
-                            <MenuItem Click="CopyPoint_Click" Header="复制坐标" />
-                            <MenuItem Click="CopyColor_Click" Header="复制颜色值" />
-                            <MenuItem Command="{Binding AddOffset_Click}" Header="添加偏色" />
-                            <MenuItem Command="{Binding GetOffset_Click}" Header="计算偏色" />
-                            <MenuItem Command="{Binding ClearData_Click}" Header="清空列表" />
-                        </ContextMenu>
-                    </DataGrid.ContextMenu>
-                </DataGrid>
-            </Border>
-        </StackPanel>
+					<DataGrid.ContextMenu>
+						<ContextMenu Style="{DynamicResource MaterialDesignContextMenu}">
+							<MenuItem Click="CopyPoint_Click"
+							          Header="复制坐标" />
+							<MenuItem Click="CopyColor_Click"
+							          Header="复制颜色值" />
+							<MenuItem Command="{Binding AddOffset_Click}"
+							          Header="添加偏色" />
+							<MenuItem Command="{Binding GetOffset_Click}"
+							          Header="计算偏色" />
+							<MenuItem Command="{Binding ClearData_Click}"
+							          Header="清空列表" />
+						</ContextMenu>
+					</DataGrid.ContextMenu>
+				</DataGrid>
+			</Border>
+		</StackPanel>
 
-        <Grid
-            x:Name="Panel_2"
-            Width="auto"
-            Height="auto"
-            Margin="160,15"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top">
-            <ScrollViewer
-                x:Name="Scroll_1"
-                Focusable="False"
-                HorizontalScrollBarVisibility="Auto"
-                Style="{DynamicResource MaterialDesignScrollViewer}"
-                VerticalScrollBarVisibility="Auto">
-                <Image
-                    x:Name="Img"
-                    Width="{Binding ImgWidth}"
-                    Height="{Binding ImgHeight}"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    AllowDrop="True"
-                    Focusable="True"
-                    SizeChanged="Window_SizeChanged"
-                    Source="{Binding ImgSource}">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseLeftButtonDown">
-                            <i:InvokeCommandAction Command="{Binding Img_MouseDown}" CommandParameter="{Binding ElementName=_Window}" />
-                        </i:EventTrigger>
-                        <i:EventTrigger EventName="MouseMove">
-                            <i:InvokeCommandAction Command="{Binding Img_MouseMove}" CommandParameter="{Binding ElementName=_Window}" />
-                        </i:EventTrigger>
-                        <i:EventTrigger EventName="MouseLeftButtonUp">
-                            <i:InvokeCommandAction Command="{Binding Img_MouseLeftButtonUp}" CommandParameter="{Binding ElementName=Img}" />
-                        </i:EventTrigger>
-                        <i:EventTrigger EventName="MouseLeave">
-                            <i:InvokeCommandAction Command="{Binding Img_MouseLeave}" CommandParameter="{Binding ElementName=_Window}" />
-                        </i:EventTrigger>
-                        <i:EventTrigger EventName="MouseEnter">
-                            <i:InvokeCommandAction Command="{Binding Img_MouseEnter}" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Image>
-            </ScrollViewer>
-        </Grid>
+		<Grid x:Name="Panel_2"
+		      Width="auto"
+		      Height="auto"
+		      Margin="160,15"
+		      HorizontalAlignment="Left"
+		      VerticalAlignment="Top">
+			<ScrollViewer x:Name="Scroll_1"
+			              Focusable="False"
+			              HorizontalScrollBarVisibility="Auto"
+			              Style="{DynamicResource MaterialDesignScrollViewer}"
+			              VerticalScrollBarVisibility="Auto">
+				<Image x:Name="Img"
+				       Width="{Binding ImgWidth}"
+				       Height="{Binding ImgHeight}"
+				       HorizontalAlignment="Left"
+				       VerticalAlignment="Top"
+				       AllowDrop="True"
+				       Focusable="True"
+				       SizeChanged="Window_SizeChanged"
+				       Source="{Binding ImgSource}">
+					<i:Interaction.Triggers>
+						<i:EventTrigger EventName="MouseLeftButtonDown">
+							<i:InvokeCommandAction Command="{Binding Img_MouseDown}"
+							                       CommandParameter="{Binding ElementName=_Window}" />
+						</i:EventTrigger>
+						<i:EventTrigger EventName="MouseMove">
+							<i:InvokeCommandAction Command="{Binding Img_MouseMove}"
+							                       CommandParameter="{Binding ElementName=_Window}" />
+						</i:EventTrigger>
+						<i:EventTrigger EventName="MouseLeftButtonUp">
+							<i:InvokeCommandAction Command="{Binding Img_MouseLeftButtonUp}"
+							                       CommandParameter="{Binding ElementName=Img}" />
+						</i:EventTrigger>
+						<i:EventTrigger EventName="MouseLeave">
+							<i:InvokeCommandAction Command="{Binding Img_MouseLeave}"
+							                       CommandParameter="{Binding ElementName=_Window}" />
+						</i:EventTrigger>
+						<i:EventTrigger EventName="MouseEnter">
+							<i:InvokeCommandAction Command="{Binding Img_MouseEnter}" />
+						</i:EventTrigger>
+					</i:Interaction.Triggers>
+				</Image>
+			</ScrollViewer>
+		</Grid>
 
-        <StackPanel
-            x:Name="Panel_4"
-            Width="auto"
-            Height="auto"
-            Margin="{Binding LoupeMargin}"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            IsEnabled="False"
-            Visibility="{Binding LoupeVisibility, Mode=TwoWay}">
-            <Image
-                x:Name="Loupe"
-                Width="241"
-                Height="241"
-                Source="{Binding LoupeWriteBmp}"
-                Stretch="UniformToFill" />
-            <StackPanel
-                Width="241"
-                Height="auto"
-                Background="#666666"
-                Orientation="Horizontal">
-                <TextBlock Margin="10,3,0,8" Foreground="#bbbbbb">x</TextBlock>
-                <TextBlock
-                    Margin="10,8,0,8"
-                    FontSize="16"
-                    Text="{Binding PointX}" />
-                <TextBlock Margin="70,3,0,8" Foreground="#bbbbbb">y</TextBlock>
-                <TextBlock
-                    Margin="10,8,0,8"
-                    FontSize="16"
-                    Text="{Binding PointY}" />
-            </StackPanel>
-        </StackPanel>
-        <Rectangle
-            x:Name="SelectRectangle"
-            Width="{Binding SelectRectangleWidth, Mode=TwoWay}"
-            Height="{Binding SelectRectangleHeight, Mode=TwoWay}"
-            Margin="{Binding SelectRectangleMargin, Mode=TwoWay}"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Fill="Transparent"
-            Focusable="False"
-            RadiusX="0"
-            RadiusY="0"
-            Stroke="Red"
-            StrokeDashArray="3"
-            Visibility="{Binding SelectRectangleVisibility, Mode=TwoWay}" />
-        <StackPanel
-            x:Name="Panel_5"
-            Width="auto"
-            Height="auto"
-            Margin="{Binding FindResultMargin}"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            IsVisibleChanged="Panel_5_IsVisibleChanged"
-            Visibility="{Binding FindResultVisibility, Mode=TwoWay}">
-            <Viewbox
-                Width="72"
-                Height="72"
-                Stretch="Uniform">
-                <Canvas Width="48" Height="48">
-                    <Rectangle
-                        Width="48"
-                        Height="48"
-                        Fill="#03ffffff" />
-                    <Path
-                        Fill="#FF4A90E2"
-                        Stroke="#FF4A90E2"
-                        StrokeLineJoin="Round"
-                        StrokeThickness="6">
-                        <Path.Data>
-                            <PathGeometry Figures="M24 44C24 44 39 32 39 19C39 10.7157 32.2843 4 24 4C15.7157 4 9 10.7157 9 19C9 32 24 44 24 44Z" FillRule="NonZero" />
-                        </Path.Data>
-                    </Path>
-                    <Path
-                        Fill="#FF43CCF8"
-                        Stroke="#FFFFFFFF"
-                        StrokeLineJoin="Round"
-                        StrokeThickness="4">
-                        <Path.Data>
-                            <PathGeometry Figures="M24 25C27.3137 25 30 22.3137 30 19C30 15.6863 27.3137 13 24 13C20.6863 13 18 15.6863 18 19C18 22.3137 20.6863 25 24 25Z" FillRule="NonZero" />
-                        </Path.Data>
-                    </Path>
-                </Canvas>
-            </Viewbox>
-        </StackPanel>
-    </Grid>
+		<StackPanel x:Name="Panel_4"
+		            Width="auto"
+		            Height="auto"
+		            Margin="{Binding LoupeMargin}"
+		            HorizontalAlignment="Left"
+		            VerticalAlignment="Top"
+		            IsEnabled="False"
+		            Visibility="{Binding LoupeVisibility, Mode=TwoWay}">
+			<Image x:Name="Loupe"
+			       Width="241"
+			       Height="241"
+			       Source="{Binding LoupeWriteBmp}"
+			       Stretch="UniformToFill" />
+			<StackPanel Width="241"
+			            Height="auto"
+			            Background="#666666"
+			            Orientation="Horizontal">
+				<TextBlock Margin="10,3,0,8"
+				           Foreground="#bbbbbb">
+					x
+				</TextBlock>
+				<TextBlock Margin="10,8,0,8"
+				           FontSize="16"
+				           Text="{Binding PointX}" />
+				<TextBlock Margin="70,3,0,8"
+				           Foreground="#bbbbbb">
+					y
+				</TextBlock>
+				<TextBlock Margin="10,8,0,8"
+				           FontSize="16"
+				           Text="{Binding PointY}" />
+			</StackPanel>
+		</StackPanel>
+		<Rectangle x:Name="SelectRectangle"
+		           Width="{Binding SelectRectangleWidth, Mode=TwoWay}"
+		           Height="{Binding SelectRectangleHeight, Mode=TwoWay}"
+		           Margin="{Binding SelectRectangleMargin, Mode=TwoWay}"
+		           HorizontalAlignment="Left"
+		           VerticalAlignment="Top"
+		           Fill="Transparent"
+		           Focusable="False"
+		           RadiusX="0"
+		           RadiusY="0"
+		           Stroke="Red"
+		           StrokeDashArray="3"
+		           Visibility="{Binding SelectRectangleVisibility, Mode=TwoWay}" />
+		<StackPanel x:Name="Panel_5"
+		            Width="auto"
+		            Height="auto"
+		            Margin="{Binding FindResultMargin}"
+		            HorizontalAlignment="Left"
+		            VerticalAlignment="Top"
+		            IsVisibleChanged="Panel_5_IsVisibleChanged"
+		            Visibility="{Binding FindResultVisibility, Mode=TwoWay}">
+			<Viewbox Width="72"
+			         Height="72"
+			         Stretch="Uniform">
+				<Canvas Width="48"
+				        Height="48">
+					<Rectangle Width="48"
+					           Height="48"
+					           Fill="#03ffffff" />
+					<Path Fill="#FF4A90E2"
+					      Stroke="#FF4A90E2"
+					      StrokeLineJoin="Round"
+					      StrokeThickness="6">
+						<Path.Data>
+							<PathGeometry Figures="M24 44C24 44 39 32 39 19C39 10.7157 32.2843 4 24 4C15.7157 4 9 10.7157 9 19C9 32 24 44 24 44Z"
+							              FillRule="NonZero" />
+						</Path.Data>
+					</Path>
+					<Path Fill="#FF43CCF8"
+					      Stroke="#FFFFFFFF"
+					      StrokeLineJoin="Round"
+					      StrokeThickness="4">
+						<Path.Data>
+							<PathGeometry Figures="M24 25C27.3137 25 30 22.3137 30 19C30 15.6863 27.3137 13 24 13C20.6863 13 18 15.6863 18 19C18 22.3137 20.6863 25 24 25Z"
+							              FillRule="NonZero" />
+						</Path.Data>
+					</Path>
+				</Canvas>
+			</Viewbox>
+		</StackPanel>
+	</Grid>
 </Window>

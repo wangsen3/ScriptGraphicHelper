@@ -1,8 +1,4 @@
-﻿using MaterialDesignColors;
-using MaterialDesignThemes.Wpf;
-using Newtonsoft.Json;
-using ScriptGraphicHelper.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -11,6 +7,10 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using MaterialDesignColors;
+using MaterialDesignThemes.Wpf;
+using Newtonsoft.Json;
+using ScriptGraphicHelper.Models;
 using static System.Environment;
 using Color = System.Windows.Media.Color;
 using Point = System.Windows.Point;
@@ -70,7 +70,6 @@ namespace ScriptGraphicHelper.Views
                 ColorInfo.AllOffsetColor = setting.LastAllOffset;
                 ColorInfo.BrushMode = setting.LastHintColorShow;
                 CreateColorStrHelper.IsAddRange = setting.LastIsAddRange;
-                Dmsoft.RegCode = setting.LastDMRegCode;
             }
             catch { }
 
@@ -110,7 +109,6 @@ namespace ScriptGraphicHelper.Views
             setting.LastHintColorShow = ColorInfo.BrushMode;
             setting.LastAllOffset = ColorInfo.AllOffsetColor;
             setting.LastIsAddRange = CreateColorStrHelper.IsAddRange;
-            setting.LastDMRegCode = Dmsoft.RegCode;
             string settingStr = JsonConvert.SerializeObject(setting, Formatting.Indented);
             File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + "setting.json", settingStr);
         }
